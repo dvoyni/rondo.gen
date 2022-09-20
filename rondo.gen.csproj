@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net48</TargetFramework>
+        <LangVersion>default</LangVersion>
+        <RootNamespace>Gen</RootNamespace>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <OutputPath>bin/Debug/net48/</OutputPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <OutputPath>bin/Release/net48/</OutputPath>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="obj\Debug\net48" />
+    </ItemGroup>
+
+</Project>
