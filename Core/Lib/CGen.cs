@@ -28,15 +28,15 @@ namespace Rondo.Gen.Core.Lib {
                 return "";
             }
             return
-                    $"    [StructLayout(LayoutKind.Sequential)]\n" +
+                    $"    [StructLayout(LayoutKind.Sequential, Pack=1)]\n" +
                     $"    public readonly unsafe struct Ca<{J(", ", 0, t, tx => $"T{tx}")}> {{\n" +
-                    $"       private readonly void* _fn;\n" +
-                    $"       private readonly int _arity;\n" +
-                    $"       {J("\n       ", 0, AMax, a => $"private readonly void* _arg{a};")}\n" +
+                    $"       {J("\n        ", 0, AMax, a => $"private readonly void* _arg{a};")}\n" +
+                    $"        private readonly int _arity;\n" +
+                    $"        private readonly void* _fn;\n" +
                     $"\n" +
                     $"       {J("\n       ", 0, AMax + 1, pa => ACtor(pa, t))}" +
                     $"\n" +
-                    $"       public void Invoke({J(", ", 0, t, pt => $"T{pt} p{pt}")}) {{\n" +
+                    $"        public void Invoke({J(", ", 0, t, pt => $"T{pt} p{pt}")}) {{\n" +
                     $"            switch (_arity) {{\n" +
                     $"            {J("\n            ", 0, AMax + 1, pa => $"case {pa}:\n                ((delegate*<{S(", ", J(",", 0, t, pt => $"T{pt}"), J(", ", 0, pa, _ => "void*"))}, void>)_fn)({S(", ", J(",", 0, t, pt => $"p{pt}"), J(", ", 0, pa, pa2 => $"_arg{pa2}"))});\n                break;")}" +
                     $"\n" +
@@ -80,15 +80,15 @@ namespace Rondo.Gen.Core.Lib {
 
         static string Cf(int t) {
             return
-                    $"    [StructLayout(LayoutKind.Sequential)]\n" +
+                    $"    [StructLayout(LayoutKind.Sequential, Pack=1)]\n" +
                     $"    public readonly unsafe struct Cf<{S(", ", J(", ", 0, t, tx => $"T{tx}"), "TR")}> {{\n" +
-                    $"       private readonly void* _fn;\n" +
-                    $"       private readonly int _arity;\n" +
-                    $"       {J("\n       ", 0, AMax, a => $"private readonly void* _arg{a};")}\n" +
+                    $"       {J("\n        ", 0, AMax, a => $"private readonly void* _arg{a};")}\n" +
+                    $"        private readonly int _arity;\n" +
+                    $"        private readonly void* _fn;\n" +
                     $"\n" +
                     $"       {J("\n       ", 0, AMax + 1, pa => FCtor(pa, t))}" +
                     $"\n" +
-                    $"       public TR Invoke({J(", ", 0, t, pt => $"T{pt} p{pt}")}) {{\n" +
+                    $"        public TR Invoke({J(", ", 0, t, pt => $"T{pt} p{pt}")}) {{\n" +
                     $"            switch (_arity) {{\n" +
                     $"            {J("\n            ", 0, AMax + 1, pa => $"case {pa}:\n                return ((delegate*<{S(", ", J(", ", 0, t, pt => $"T{pt}"), J(", ", 0, pa, _ => "void*"), "TR")}>)_fn)({S(", ", J(", ", 0, t, pt => $"p{pt}"), J(", ", 0, pa, pa2 => $"_arg{pa2}"))});")}" +
                     $"\n" +

@@ -29,11 +29,11 @@ namespace Rondo.Gen.Core.Lib {
                 return "";
             }
             return
-                    $"    [StructLayout(LayoutKind.Sequential)]\n" +
+                    $"    [StructLayout(LayoutKind.Sequential, Pack=1)]\n" +
                     $"    public readonly unsafe struct CLa<{J(", ", 0, t, tx => $"T{tx}")}> : IDisposable, IEquatable<CLa<{J(", ", 0, t, tx => $"T{tx}")}>> {{\n" +
-                    $"       private readonly void* _fn;\n" +
-                    $"       private readonly int _arity;\n" +
                     $"       {J("\n       ", 0, AMax, a => $"private readonly IntPtr _arg{a};")}\n" +
+                    $"       private readonly int _arity;\n" +
+                    $"       private readonly void* _fn;\n" +
                     $"\n" +
                     $"       {J("\n       ", 0, AMax + 1, pa => ACtor(pa, t))}" +
                     $"\n" +
@@ -89,11 +89,11 @@ namespace Rondo.Gen.Core.Lib {
 
         static string Cf(int t) {
             return
-                    $"    [StructLayout(LayoutKind.Sequential)]\n" +
+                    $"    [StructLayout(LayoutKind.Sequential, Pack=1)]\n" +
                     $"    public readonly unsafe struct CLf<{S(", ", J(", ", 0, t, tx => $"T{tx}"), "TR")}> : IDisposable, IEquatable<CLf<{S(", ", J(", ", 0, t, tx => $"T{tx}"), "TR")}>> {{\n" +
-                    $"       private readonly void* _fn;\n" +
-                    $"       private readonly int _arity;\n" +
                     $"       {J("\n       ", 0, AMax, a => $"private readonly IntPtr _arg{a};")}\n" +
+                    $"       private readonly int _arity;\n" +
+                    $"       private readonly void* _fn;\n" +
                     $"\n" +
                     $"       {J("\n       ", 0, AMax + 1, pa => FCtor(pa, t))}" +
                     $"\n" +
