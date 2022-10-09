@@ -47,7 +47,7 @@ namespace Rondo.Gen.Core.Lib {
                     $"            }}\n" +
                     $"        }}\n\n" +
                     $"        public void Dispose() {{\n" +
-                    $"            {J("\n            ", 0, AMax, pa => $"if (_arg{pa} != IntPtr.Zero) {{\n                Marshal.FreeHGlobal(_arg{pa});\n            }}")}\n" +
+                    $"            {J("\n            ", 0, AMax, pa => $"if (_arg{pa} != IntPtr.Zero) {{\n                Mem.FreeOuterMemory(_arg{pa});\n            }}")}\n" +
                     $"        }}\n\n" +
                     $"        public bool Equals(CLa<{J(", ", 0, t, tx => $"T{tx}")}> other) {{\n" +
                     $"#pragma warning disable CS8909\n" +
@@ -82,7 +82,7 @@ namespace Rondo.Gen.Core.Lib {
             }
             return
                     $"        public static CLa<{J(", ", 0, t, pt => $"T{pt}")}> New<{S(", ", J(", ", 0, t, pt => $"T{pt}"), J(", ", 1, a, pa => $"A{pa - 1}"))}>(delegate*<{S(",", $"{S(", ", J(", ", 0, t, pt => $"T{pt}"), J(", ", 1, a, pa => $"A{pa - 1}*"), "void")}> fn", J(", ", 1, a, pa => $"A{pa - 1} a{pa - 1}"))}){J("", 1, a, pa => $"\n                where A{pa - 1}: unmanaged")} {{\n" +
-                    J("", 1, a, pa => $"            var sz{pa - 1} = Mem.SizeOf<A{pa - 1}>();\n            var pa{pa - 1} = Marshal.AllocHGlobal(sz{pa - 1});\n            Buffer.MemoryCopy(&a{pa - 1}, pa{pa - 1}.ToPointer(), sz{pa - 1}, sz{pa - 1});\n") +
+                    J("", 1, a, pa => $"            var sz{pa - 1} = Mem.SizeOf<A{pa - 1}>();\n            var pa{pa - 1} = Mem.AllocOuterMemoryAndCopy(&a{pa - 1}, sz{pa - 1});\n") +
                     $"            return new CLa<{J(", ", 0, t, pt => $"T{pt}")}>({S(", ", $"(delegate*<{S(", ", J(", ", 0, t, pt => $"T{pt}"), J(", ", 1, a, pa => "IntPtr"), "void>)fn")}", J(", ", 1, a, pa => $"pa{pa - 1}"))});\n" +
                     $"        }}\n";
         }
@@ -107,7 +107,7 @@ namespace Rondo.Gen.Core.Lib {
                     $"            }}\n" +
                     $"        }}\n\n" +
                     $"        public void Dispose() {{\n" +
-                    $"            {J("\n            ", 0, AMax, pa => $"if (_arg{pa} != IntPtr.Zero) {{\n                Marshal.FreeHGlobal(_arg{pa});\n            }}")}\n" +
+                    $"            {J("\n            ", 0, AMax, pa => $"if (_arg{pa} != IntPtr.Zero) {{\n                Mem.FreeOuterMemory(_arg{pa});\n            }}")}\n" +
                     $"        }}\n\n" +
                     $"        public bool Equals(CLf<{S(", ", J(", ", 0, t, tx => $"T{tx}"), "TR")}> other) {{\n" +
                     $"#pragma warning disable CS8909\n" +
@@ -127,7 +127,7 @@ namespace Rondo.Gen.Core.Lib {
         static string SCfc(int t, int a) {
             return
                     $"        public static CLf<{S(",", J(", ", 0, t, pt => $"T{pt}"), "TR")}> New<{S(", ", J(", ", 0, t, pt => $"T{pt}"), J(", ", 1, a, pa => $"A{pa - 1}"), "TR")}>(delegate*<{S(",", $"{S(", ", J(", ", 0, t, pt => $"T{pt}"), J(", ", 1, a, pa => $"A{pa - 1}*"), "TR")}> fn", J(", ", 1, a, pa => $"A{pa - 1} a{pa - 1}"))}){J("", 1, a, pa => $"\n                where A{pa - 1}: unmanaged")} {{\n" +
-                    J("", 1, a, pa => $"            var sz{pa - 1} = Mem.SizeOf<A{pa - 1}>();\n            var pa{pa - 1} = Marshal.AllocHGlobal(sz{pa - 1});\n            Buffer.MemoryCopy(&a{pa - 1}, pa{pa - 1}.ToPointer(), sz{pa - 1}, sz{pa - 1});\n") +
+                    J("", 1, a, pa => $"            var sz{pa - 1} = Mem.SizeOf<A{pa - 1}>();\n            var pa{pa - 1} = Mem.AllocOuterMemoryAndCopy(&a{pa - 1}, sz{pa - 1});\n") +
                     $"            return new CLf<{S(", ", J(", ", 0, t, pt => $"T{pt}"), "TR")}>({S(", ", $"(delegate*<{S(", ", J(", ", 0, t, pt => $"T{pt}"), J(", ", 1, a, pa => "void*"), "TR>)fn")}", J(", ", 1, a, pa => $"pa{pa - 1}"))});\n" +
                     $"        }}\n";
         }
