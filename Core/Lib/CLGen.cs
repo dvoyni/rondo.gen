@@ -30,8 +30,8 @@ namespace Rondo.Gen.Core.Lib {
             }
             return
                     $"    [StructLayout(LayoutKind.Sequential, Pack=1)]\n" +
-                    $"    public readonly unsafe struct CLa<{J(", ", 0, t, tx => $"T{tx}")}> : IDisposable, IEquatable<CLa<{J(", ", 0, t, tx => $"T{tx}")}>> {{\n" +
-                    $"       {J("\n       ", 0, AMax, a => $"private readonly IntPtr _arg{a};")}\n" +
+                    $"    public unsafe struct CLa<{J(", ", 0, t, tx => $"T{tx}")}> : IDisposable, IEquatable<CLa<{J(", ", 0, t, tx => $"T{tx}")}>> {{\n" +
+                    $"       {J("\n       ", 0, AMax, a => $"private IntPtr _arg{a};")}\n" +
                     $"       private readonly int _arity;\n" +
                     $"       private readonly void* _fn;\n" +
                     $"\n" +
@@ -47,7 +47,7 @@ namespace Rondo.Gen.Core.Lib {
                     $"            }}\n" +
                     $"        }}\n\n" +
                     $"        public void Dispose() {{\n" +
-                    $"            {J("\n            ", 0, AMax, pa => $"if (_arg{pa} != IntPtr.Zero) {{\n                Mem.FreeOuterMemory(_arg{pa});\n            }}")}\n" +
+                    $"            {J("\n            ", 0, AMax, pa => $"if (_arg{pa} != IntPtr.Zero) {{\n                Mem.FreeOuterMemory(ref _arg{pa});\n            }}")}\n" +
                     $"        }}\n\n" +
                     $"        public bool Equals(CLa<{J(", ", 0, t, tx => $"T{tx}")}> other) {{\n" +
                     $"#pragma warning disable CS8909\n" +
@@ -90,8 +90,8 @@ namespace Rondo.Gen.Core.Lib {
         static string Cf(int t) {
             return
                     $"    [StructLayout(LayoutKind.Sequential, Pack=1)]\n" +
-                    $"    public readonly unsafe struct CLf<{S(", ", J(", ", 0, t, tx => $"T{tx}"), "TR")}> : IDisposable, IEquatable<CLf<{S(", ", J(", ", 0, t, tx => $"T{tx}"), "TR")}>> {{\n" +
-                    $"       {J("\n       ", 0, AMax, a => $"private readonly IntPtr _arg{a};")}\n" +
+                    $"    public unsafe struct CLf<{S(", ", J(", ", 0, t, tx => $"T{tx}"), "TR")}> : IDisposable, IEquatable<CLf<{S(", ", J(", ", 0, t, tx => $"T{tx}"), "TR")}>> {{\n" +
+                    $"       {J("\n       ", 0, AMax, a => $"private IntPtr _arg{a};")}\n" +
                     $"       private readonly int _arity;\n" +
                     $"       private readonly void* _fn;\n" +
                     $"\n" +
@@ -107,7 +107,7 @@ namespace Rondo.Gen.Core.Lib {
                     $"            }}\n" +
                     $"        }}\n\n" +
                     $"        public void Dispose() {{\n" +
-                    $"            {J("\n            ", 0, AMax, pa => $"if (_arg{pa} != IntPtr.Zero) {{\n                Mem.FreeOuterMemory(_arg{pa});\n            }}")}\n" +
+                    $"            {J("\n            ", 0, AMax, pa => $"if (_arg{pa} != IntPtr.Zero) {{\n                Mem.FreeOuterMemory(ref _arg{pa});\n            }}")}\n" +
                     $"        }}\n\n" +
                     $"        public bool Equals(CLf<{S(", ", J(", ", 0, t, tx => $"T{tx}"), "TR")}> other) {{\n" +
                     $"#pragma warning disable CS8909\n" +
